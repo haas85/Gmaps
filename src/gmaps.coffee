@@ -53,8 +53,7 @@ class Gmap
       else
         callback.call callback status, null
 
-  addPolyline: (polyline, hide_previous) ->
-    _addElement "polyline", polyline, hide_previous, @
+  addPolyline: (polyline, hide_previous) ->_addElement "polyline", polyline, hide_previous, @
 
   addPolygon: (polygon, hide_previous) -> _addElement "polygon", polygon, hide_previous, @
 
@@ -64,6 +63,18 @@ class Gmap
     if context.current[type]?
       context.current[type].setMap = null if hide
       context.history[type][context.current[type].id] = context.current[type]
+
+    element.setMap context.map
+    context.current[type] = element
+
+  getPolyline: (id) -> _getElement "polyline", id, @
+
+  getPolygon: (id) -> _getElement "polygon", id, @
+
+  getGeodesic: (id) -> _getElement "geodesic", id, @
+
+  _getElement = (type, id, context) ->
+    if id? then context.history[type][id] else context.current[type]
 
     element.setMap context.map
     context.current[type] = element
