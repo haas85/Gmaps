@@ -1,4 +1,4 @@
-class Path
+class Geometry
   constructor: (@properties={}, path=[]) ->
     @id = new Date().getTime()
     @path = path.concat []
@@ -23,7 +23,7 @@ class Path
   setMap: (map) ->
     @element.setMap map
 
-class Polyline extends Path
+class Polyline extends Geometry
   constructor: (@properties={}, path=[]) ->
     super
     @type = google.maps.Polyline
@@ -31,7 +31,7 @@ class Polyline extends Path
 
     do @load
 
-class Polygon extends Path
+class Polygon extends Geometry
   constructor: (@properties={}, path=[]) ->
     super
     @type = google.maps.Polygon
