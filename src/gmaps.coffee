@@ -19,15 +19,23 @@ class Gmap
       geodesic: null
 
   center: (latitude, longitude) ->
-    latLng = new google.maps.LatLng(latitude, longitude)
-    @map.setCenter latLng
-
-  type: (type="ROAD") ->
-    view = _getMapType type.toUpperCase()
-    if view?
-      @map.setMapTypeId view
+    if latitude? and longitude?
+      latLng = new google.maps.LatLng(latitude, longitude)
+      @map.setCenter latLng
     else
-      throw "Invalid map type"
+      @map.getCenter()
+
+  type: (type) ->
+    if type?
+      view = _getMapType type.toUpperCase()
+      if view?
+        @map.setMapTypeId view
+      else
+        throw "Invalid map type"
+    else
+      @map.getMapTypeId()
+
+  zoom: (level) -> if level? then @map.setZoom(level) else @map.getZoom()
 
   zoomIn: -> @map.setZoom(@map.zoom + 1)
 
