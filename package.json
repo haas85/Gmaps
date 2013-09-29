@@ -1,0 +1,18 @@
+{
+  "name"            : "Gmaps",
+  "version"         : "0.9.29",
+  "description"     : "Gmaps library for api v3",
+  "homepage"        : "",
+  "author": {
+    "name"          : "haas85",
+    "site"          : "http://ingonza.com"},
+  "dependencies": {
+    "grunt"                 : "*",
+    "grunt-contrib-coffee"  : "*",
+    "grunt-contrib-uglify"  : "*",
+    "grunt-contrib-watch"   : "*"},
+  "license": [{
+    "type": "MIT",
+    "url": "http://www.opensource.org/licenses/mit-license.php"
+  }]
+}
