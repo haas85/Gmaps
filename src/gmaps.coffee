@@ -34,7 +34,6 @@ class Gmap
   zoomOut: -> @map.setZoom(@map.zoom - 1)
 
   addPolyline: (polyline, hide_previous) ->
-    console.log @
     _addElement "polyline", polyline, hide_previous, @
 
   addPolygon: (polygon, hide_previous) -> _addElement "polygon", polygon, hide_previous, @
@@ -47,7 +46,6 @@ class Gmap
       context.history[type][context.current[type].id] = context.current[type]
 
     element.setMap context.map
-    console.log element
     context.current[type] = element
 
   _getMapType = (type) ->
