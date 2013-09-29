@@ -20,8 +20,7 @@ class Geometry
     @path.push point
     do @load
 
-  setMap: (map) ->
-    @element.setMap map
+  setMap: (map) -> @element.setMap map
 
 class Polyline extends Geometry
   constructor: (@properties={}, path=[]) ->

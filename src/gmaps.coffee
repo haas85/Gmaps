@@ -1,6 +1,7 @@
 class Gmap
   constructor: (container_id, options={}) ->
     throw "Import google maps library" unless google?
+    @id = new Date().getTime()
     options.zoom = 7 unless options.zoom?
     options.disableDefaultUI = false unless options.disableDefaultUI?
     options.mapTypeId = _getMapType "ROAD" unless options.mapTypeId?
@@ -8,15 +9,11 @@ class Gmap
 
     @map = new google.maps.Map(document.getElementById(container_id), options)
 
-    @history =
+    @elements =
+      route: {}
       polyline: {}
       polygone: {}
       geodesic: {}
-
-    @current =
-      polyline: null
-      polygone: null
-      geodesic: null
 
   center: (latitude, longitude) ->
     if latitude? and longitude?
@@ -53,31 +50,22 @@ class Gmap
       else
         callback.call callback status, null
 
-  addPolyline: (polyline, hide_previous) ->_addElement "polyline", polyline, hide_previous, @
+  addRoute: (route) -> _addElement "route", route, @
+  addPolyline: (polyline) -> _addElement "polyline", polyline, @
+  addPolygon: (polygon) -> _addElement "polygon", polygon, @
+  addGeodesic: (geodesic) -> _addElement "geodesic", geodesic, @
 
-  addPolygon: (polygon, hide_previous) -> _addElement "polygon", polygon, hide_previous, @
-
-  addGeodesic: (geodesic, hide_previous) -> _addElement "geodesic", geodesic, hide_previous, @
-
-  _addElement = (type, element, hide, context) ->
-    if context.current[type]?
-      context.current[type].setMap = null if hide
-      context.history[type][context.current[type].id] = context.current[type]
-
+  _addElement = (type, element, context) ->
     element.setMap context.map
-    context.current[type] = element
+    context.elements[type] = element
 
+  getRoute: (id) -> _getElement "route", id, @
   getPolyline: (id) -> _getElement "polyline", id, @
-
   getPolygon: (id) -> _getElement "polygon", id, @
-
   getGeodesic: (id) -> _getElement "geodesic", id, @
 
   _getElement = (type, id, context) ->
-    if id? then context.history[type][id] else context.current[type]
-
-    element.setMap context.map
-    context.current[type] = element
+    if id? then context.elements[type][id] else throw "Id is required"
 
   _getMapType = (type) ->
     MAP_TYPES =
@@ -86,5 +74,7 @@ class Gmap
       SATELLITE   : google.maps.MapTypeId.SATELLITE
       TERRAIN     : google.maps.MapTypeId.TERRAIN
     MAP_TYPES[type]
+
+
 
 window.Gmaps = Gmap

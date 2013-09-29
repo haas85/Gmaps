@@ -1,36 +1,43 @@
 class Route
-  constructor: (@properties={}, path=[], callback) ->
+  constructor: (@properties={}, origin, destination, waypoints=[], callback) ->
     @id = new Date().getTime()
-    @path = (location: elem for elem in path)
-    @origin = if @path.length > 0 then @path.shift() else null
+
+    @directionsDisplay = new google.maps.DirectionsRenderer()
+    @directionsService = new google.maps.DirectionsService()
+
+    @path = (location: point for point in waypoints).concat []
+    @origin = location: origin
+    @destination = location: destination
 
     @properties.optimizeWaypoints = true unless @properties.optimizeWaypoints?
     @properties.travelMode = _getTransport("CAR") unless @properties.travelMode?
 
-    @directionsService = new google.maps.DirectionsService()
-
     @calculate callback if callback?
 
   calculate: (callback) ->
-    @destination = if @path.length > 0 then @path.pop() else null
     @properties.origin = @origin.location
     @properties.destination = @destination.location
     @properties.waypoints = @path
 
-    @directionsService.route @properties, (response, status) ->
-      if status is google.maps.GeocoderStatus.OK
-        callback.call callback, null, response
+    @directionsService.route @properties, (@directions, status) =>
+      if status is google.maps.DirectionsStatus.OK
+        @directionsDisplay.setDirections @directions if @directionsDisplay.getMap()?
+        callback.call callback, null, @directions if callback?
       else
-        callback.call callback status, null
+        callback.call callback status, null if callback?
 
   addPoint: (point, callback) ->
     if point.latitude? and point.longitude?
       point = new google.maps.LatLng point.latitude, point.longitude
 
     @path.push @destination
-    @path.push location: point
+    @destination = location: point
 
     @calculate callback
+
+  setMap: (map) ->
+    @directionsDisplay.setMap map
+    @directionsDisplay.setDirections @directions if @directions? and map?
 
   _getTransport = (type) ->
     TRANSPORT_TYPES =
