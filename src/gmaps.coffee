@@ -33,6 +33,18 @@ class Gmap
 
   zoomOut: -> @map.setZoom(@map.zoom - 1)
 
+  on: (type, callback) -> google.maps.event.addListener @map, type, callback
+
+  off: (type) -> google.maps.event.clearInstanceListeners @map, type
+
+  search: (text, callback) ->
+    @geocoder = new google.maps.Geocoder() unless @geocoder?
+    @geocoder.geocode {address: text}, (result, status) ->
+      if status is google.maps.GeocoderStatus.OK
+        callback.call callback, null, result[0]
+      else
+        callback.call callback status, null
+
   addPolyline: (polyline, hide_previous) ->
     _addElement "polyline", polyline, hide_previous, @
 
