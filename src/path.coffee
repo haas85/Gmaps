@@ -7,7 +7,9 @@ class Path
 
   load: () ->
     current = new @type(@properties)
-    current.setMap @element.getMap() if @element?
+    if @element?
+      current.setMap @element.getMap()
+      @element.setMap null
     @element = current
 
   addPoint: (point) ->
@@ -28,4 +30,21 @@ class Polyline extends Path
 
     do @load
 
+class Polygon extends Path
+  constructor: (@properties={}, path=[]) ->
+    super
+    @type = google.maps.Polygon
+    @properties.paths = @path
+    @properties.fillColor = '#FF0000' unless @properties.fillColor?
+    @properties.fillOpacity = 0.35 unless @properties.fillOpacity?
+
+    do @load
+
+class Geodesic extends Polyline
+  constructor: (@properties={}, path=[]) ->
+    @properties.geodesic = true
+    super @properties, path
+
 window.Polyline = Polyline
+window.Polygon = Polygon
+window.Geodesic = Geodesic
