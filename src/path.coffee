@@ -1,5 +1,6 @@
 class Path
   constructor: (@properties={}, path=[]) ->
+    @id = new Date().getTime()
     @path = path.concat []
     @properties.strokeColor = '#FF0000' unless @properties.strokeColor?
     @properties.strokeOpacity = 1.0 unless @properties.strokeOpacity?
