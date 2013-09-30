@@ -10,10 +10,11 @@ class Gmap
     @map = new google.maps.Map(document.getElementById(container_id), options)
 
     @elements =
-      route: {}
-      polyline: {}
-      polygone: {}
-      geodesic: {}
+      markers   : {}
+      route     : {}
+      polyline  : {}
+      polygone  : {}
+      geodesic  : {}
 
   center: (latitude, longitude) ->
     if latitude? and longitude?
@@ -50,6 +51,22 @@ class Gmap
       else
         callback.call callback status, null
 
+  addMarker: (latitude, longitude, options={}, center) ->
+    id = new Date().getTime()
+    options.map = @map
+    options.position = new google.maps.LatLng(latitude, longitude)
+    @elements.markers[id] = new google.maps.Marker(options)
+    @map.setCenter options.position if center
+    id
+
+  getMarker: (id) -> @elements.markers[id]
+
+  deleteMarker: (id) ->
+    if @elements.markers[id]?
+      @elements.markers[id].setMap null
+      `delete this.elements.markers[id]`
+
+
   addRoute: (route) -> _addElement "route", route, @
   addPolyline: (polyline) -> _addElement "polyline", polyline, @
   addPolygon: (polygon) -> _addElement "polygon", polygon, @
@@ -74,6 +91,7 @@ class Gmap
       SATELLITE   : google.maps.MapTypeId.SATELLITE
       TERRAIN     : google.maps.MapTypeId.TERRAIN
     MAP_TYPES[type]
+
 
 
 
