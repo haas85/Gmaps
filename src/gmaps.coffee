@@ -2,10 +2,11 @@ class Gmap
   constructor: (container_id, options={}) ->
     throw "Import google maps library" unless google?
     @id = new Date().getTime()
-    options.zoom = 7 unless options.zoom?
+    console.log arguments
+    options.zoom = 6 unless options.zoom?
     options.disableDefaultUI = false unless options.disableDefaultUI?
     options.mapTypeId = _getMapType "ROAD" unless options.mapTypeId?
-    options.center = new google.maps.LatLng(41, 2) unless options.center?
+    options.center = new google.maps.LatLng(40.41, -3.69) unless options.center?
 
     @map = new google.maps.Map(document.getElementById(container_id), options)
 
@@ -51,10 +52,12 @@ class Gmap
       else
         callback.call callback status, null
 
-  addMarker: (latitude, longitude, options={}, center) ->
+  addMarker: (point, options={}, center) ->
+    if point.latitude? and point.longitude?
+      point = new google.maps.LatLng(point.latitude, point.longitude)
     id = _guid()
     options.map = @map
-    options.position = new google.maps.LatLng(latitude, longitude)
+    options.position = point
     @elements.markers[id] = new google.maps.Marker(options)
     @map.setCenter options.position if center
     id
