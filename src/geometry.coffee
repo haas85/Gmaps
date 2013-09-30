@@ -1,6 +1,6 @@
 class Geometry
   constructor: (@properties={}, path=[]) ->
-    @id = new Date().getTime()
+    @id = _guid()
     @path = path.concat []
     @properties.strokeColor = '#FF0000' unless @properties.strokeColor?
     @properties.strokeOpacity = 1.0 unless @properties.strokeOpacity?
@@ -21,6 +21,13 @@ class Geometry
     do @load
 
   setMap: (map) -> @element.setMap map
+
+  _guid = ->
+    "xxxxxxxx-xxxx-#{new Date().getTime()}-xxxxxxxxxxxx".replace /[xy]/g, (c) ->
+      r = Math.random() * 16 | 0
+      v = if c is 'x' then r else r & 3 | 8
+      v.toString 16
+    .toUpperCase()
 
 class Polyline extends Geometry
   constructor: (@properties={}, path=[]) ->

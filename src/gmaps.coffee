@@ -52,7 +52,7 @@ class Gmap
         callback.call callback status, null
 
   addMarker: (latitude, longitude, options={}, center) ->
-    id = new Date().getTime()
+    id = _guid()
     options.map = @map
     options.position = new google.maps.LatLng(latitude, longitude)
     @elements.markers[id] = new google.maps.Marker(options)
@@ -92,7 +92,12 @@ class Gmap
       TERRAIN     : google.maps.MapTypeId.TERRAIN
     MAP_TYPES[type]
 
-
+  _guid = ->
+    "xxxxxxxx-xxxx-#{new Date().getTime()}-xxxxxxxxxxxx".replace /[xy]/g, (c) ->
+      r = Math.random() * 16 | 0
+      v = if c is 'x' then r else r & 3 | 8
+      v.toString 16
+    .toUpperCase()
 
 
 window.Gmaps = Gmap
