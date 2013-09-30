@@ -1,6 +1,6 @@
 class Route
-  constructor: (@properties={}, origin, destination, waypoints=[], callback) ->
-    @id = new Date().getTime()
+  constructor: (origin, destination, @properties={}, waypoints=[], callback) ->
+    @id = _guid()
 
     @directionsDisplay = new google.maps.DirectionsRenderer()
     @directionsService = new google.maps.DirectionsService()
@@ -46,6 +46,13 @@ class Route
       TRANSIT  : google.maps.DirectionsTravelMode.TRANSIT
       WALK     : google.maps.DirectionsTravelMode.WALKING
     TRANSPORT_TYPES[type]
+
+  _guid = ->
+    "xxxxxxxx-xxxx-#{new Date().getTime()}-xxxxxxxxxxxx".replace /[xy]/g, (c) ->
+      r = Math.random() * 16 | 0
+      v = if c is 'x' then r else r & 3 | 8
+      v.toString 16
+    .toUpperCase()
 
 
 window.Route = Route

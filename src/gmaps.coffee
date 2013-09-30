@@ -2,7 +2,6 @@ class Gmap
   constructor: (container_id, options={}) ->
     throw "Import google maps library" unless google?
     @id = new Date().getTime()
-    console.log arguments
     options.zoom = 6 unless options.zoom?
     options.disableDefaultUI = false unless options.disableDefaultUI?
     options.mapTypeId = _getMapType "ROAD" unless options.mapTypeId?
