@@ -61,7 +61,11 @@ class Gmap
     @map.setCenter options.position if center
     id
 
-  getMarker: (id) -> @elements.markers[id]
+  getMarker: (id) ->
+    if id?
+      @elements.markers[id]
+    else
+      @elements.markers[key] for key of @elements.markers
 
   deleteMarker: (id) ->
     if @elements.markers[id]?
@@ -84,7 +88,10 @@ class Gmap
   getGeodesic: (id) -> _getElement "geodesic", id, @
 
   _getElement = (type, id, context) ->
-    if id? then context.elements[type][id] else throw "Id is required"
+    if id?
+      context.elements[type][id]
+    else
+      context.elements[type][key] for key of context.elements[type]
 
   _getMapType = (type) ->
     MAP_TYPES =
