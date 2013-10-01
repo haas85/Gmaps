@@ -1,4 +1,6 @@
-class Gmap
+window.Gmaps = {}
+
+class Map
   constructor: (container_id, options={}) ->
     throw "Import google maps library" unless google?
     @id = new Date().getTime()
@@ -109,4 +111,4 @@ class Gmap
     .toUpperCase()
 
 
-window.Gmaps = Gmap
+window.Gmaps.Map = Map

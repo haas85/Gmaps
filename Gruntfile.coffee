@@ -13,9 +13,13 @@ module.exports = (grunt) ->
            Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> - Licensed <%= _.pluck(pkg.license, "type").join(", ") %> */
 
         """
-    source: "src/*.coffee"
+    source: [
+      "src/map.coffee"
+      ,"src/route.coffee"
+      ,"src/geometry.coffee"
+    ]
 
-    coffee: "<%= meta.endpoint %><%= meta.file %>.debug.js": "<%= source %>"
+    coffee: "<%= meta.endpoint %><%= meta.file %>.debug.js": ["<%= source %>"]
 
     uglify:
       options         : compress: false, banner: "<%= meta.banner %>"
@@ -23,7 +27,7 @@ module.exports = (grunt) ->
 
     watch:
       lib:
-        files: "<%= source %>"
+        files: ["<%= source %>"]
         tasks: ["coffee","uglify"]
 
 

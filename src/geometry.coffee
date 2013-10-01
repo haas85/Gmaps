@@ -52,6 +52,6 @@ class Geodesic extends Polyline
     @properties.geodesic = true
     super @properties, path
 
-window.Polyline = Polyline
-window.Polygon = Polygon
-window.Geodesic = Geodesic
+window.Gmaps.Polyline = Polyline
+window.Gmaps.Polygon = Polygon
+window.Gmaps.Geodesic = Geodesic

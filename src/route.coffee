@@ -68,4 +68,4 @@ class Route
     .toUpperCase()
 
 
-window.Route = Route
+window.Gmaps.Route = Route
