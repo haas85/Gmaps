@@ -39,6 +39,19 @@ class Route
     @directionsDisplay.setMap map
     @directionsDisplay.setDirections @directions if @directions? and map?
 
+  getStaticPath: (index=0, color="black", weight=5)->
+    step = @directions.routes[0].legs[0].steps[index]
+    path = ""
+    distance = parseInt(step.path.length / 15, 10)
+    i = 0
+    while i  < step.path.length
+      path += "|#{step.path[i].lb},#{step.path[i].mb}"
+      i += distance
+    center = parseInt(step.path.length / 2, 10)
+    properties = "color:#{color},weight:#{weight}"
+    url = "http://maps.googleapis.com/maps/api/staticmap?center=#{step.path[center].lb},#{step.path[center].mb}&path=#{properties}#{path}&zoom=15&size=1000x1000&sensor=false"
+    console.log url
+
   _getTransport = (type) ->
     TRANSPORT_TYPES =
       BIKE     : google.maps.DirectionsTravelMode.BICYCLING
