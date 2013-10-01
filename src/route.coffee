@@ -39,7 +39,7 @@ class Route
     @directionsDisplay.setMap map
     @directionsDisplay.setDirections @directions if @directions? and map?
 
-  getStaticPath: (index=0, color="black", weight=5)->
+  getStaticPath: (index=0, options={})->
     step = @directions.routes[0].legs[0].steps[index]
     path = ""
     distance = parseInt(step.path.length / 15, 10)
@@ -48,8 +48,24 @@ class Route
       path += "|#{step.path[i].lb},#{step.path[i].mb}"
       i += distance
     center = parseInt(step.path.length / 2, 10)
-    properties = "color:#{color},weight:#{weight}"
-    url = "http://maps.googleapis.com/maps/api/staticmap?center=#{step.path[center].lb},#{step.path[center].mb}&path=#{properties}#{path}&zoom=15&size=1000x1000&sensor=false"
+    path_properties = ""
+    if options.color?
+      path_properties += "color:#{options.color}"
+      `delete options.color`
+    else
+      path_properties += "color:black"
+
+    if options.weight?
+      path_properties += ",weight:#{options.weight}"
+      `delete options.weight`
+    else
+      path_properties += ",weight:5"
+    options.client = 5 if Gmaps.client?
+    options.signature = 5 if Gmaps.signature?
+    options.size = "1000x1000" unless options.size?
+
+    properties = ("#{key}=#{options[key]}" for key of options).join "&"
+    url = "http://maps.googleapis.com/maps/api/staticmap?center=#{step.path[center].lb},#{step.path[center].mb}&path=#{path_properties}#{path}&zoom=15&#{properties}&sensor=false"
     console.log url
 
   _getTransport = (type) ->

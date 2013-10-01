@@ -1,4 +1,7 @@
-window.Gmaps = {}
+window.Gmaps =
+  maps_key: null
+  client: null
+  signature: null
 
 class Map
   constructor: (container_id, options={}) ->
