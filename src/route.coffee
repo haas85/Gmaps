@@ -65,7 +65,7 @@ class Route
     options.size = "1000x1000" unless options.size?
 
     properties = ("#{key}=#{options[key]}" for key of options).join "&"
-    url = "http://maps.googleapis.com/maps/api/staticmap?center=#{step.path[center].lb},#{step.path[center].mb}&path=#{path_properties}#{path}&zoom=15&#{properties}&sensor=false"
+    "http://maps.googleapis.com/maps/api/staticmap?center=#{step.path[center].lb},#{step.path[center].mb}&path=#{path_properties}#{path}&zoom=15&#{properties}&sensor=false"
 
   _getTransport = (type) ->
     TRANSPORT_TYPES =
