@@ -1,7 +1,7 @@
 window.Gmaps =
-  maps_key: null
-  client: null
-  signature: null
+  MAPS_KEY: null
+  CLIENT: null
+  SIGNATURE: null
 
 class Map
   constructor: (container_id, options={}) ->

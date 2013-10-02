@@ -60,12 +60,13 @@ class Route
       `delete options.weight`
     else
       path_properties += ",weight:5"
-    options.client = 5 if Gmaps.client?
-    options.signature = 5 if Gmaps.signature?
+    options.client = Gmaps.CLIENT if Gmaps.CLIENT?
+    options.signature = Gmaps.SIGNATURE if Gmaps.SIGNATURE?
     options.size = "1000x1000" unless options.size?
+    options.zoom = "15" unless options.zoom?
 
     properties = ("#{key}=#{options[key]}" for key of options).join "&"
-    "http://maps.googleapis.com/maps/api/staticmap?center=#{step.path[center].lb},#{step.path[center].mb}&path=#{path_properties}#{path}&zoom=15&#{properties}&sensor=false"
+    "http://maps.googleapis.com/maps/api/staticmap?center=#{step.path[center].lb},#{step.path[center].mb}&path=#{path_properties}#{path}&#{properties}&sensor=false"
 
   _getTransport = (type) ->
     TRANSPORT_TYPES =
