@@ -39,10 +39,10 @@ class Route
     @directionsDisplay.setMap map
     @directionsDisplay.setDirections @directions if @directions? and map?
 
-  getStaticPath: (index=0, options={})->
-    step = @directions.routes[0].legs[0].steps[index]
+  getStaticPath: (leg=0, index=0, options={})->
+    step = @directions.routes[0].legs[leg].steps[index]
     path = ""
-    distance = parseInt(step.path.length / 15, 10)
+    distance = if step.path.length < 15 then 1 else parseInt(step.path.length / 15, 10)
     i = 0
     while i  < step.path.length
       path += "|#{step.path[i].lb},#{step.path[i].mb}"
