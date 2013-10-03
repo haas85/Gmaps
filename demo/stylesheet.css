@@ -1,0 +1,57 @@
+#from_container {
+    display: block;
+    width:50%;
+    float: left;
+}
+
+#to_container {
+    display: block;
+    width:50%;
+    float: right;
+}
+
+input{
+    width:100%;
+}
+
+#search, #route {
+    width:80%;
+    display: block;
+    float:left;
+}
+
+button {
+    float:right;
+}
+
+#main {
+    clear:both;
+    width:100%;
+    height:800px;
+    display: block;
+}
+
+#map {
+    float: left;
+    width:90%;
+    height:100%;
+    display: block;
+}
+#aside {
+    text-align: center;
+    float: left;
+    width:10%;
+    height:100%;
+}
+
+#aside button{
+    width: 100%;
+}
+
+tr td {
+    min-width: 20px;
+}
+
+#indications {
+    width:100%;
+}

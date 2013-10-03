@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Maps test</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+    <div id="search">
+        <label for="place_search">Lugar:</label><br>
+        <input type="text" id="place_search">
+        <button id="onSearch">Search</button>
+    </div>
+    <div id="route">
+        <div id="from_container">
+            <label for="from">Desde:</label><br>
+            <input type="text" id="from">
+        </div>
+        <div id="to_container">
+            <label for="to">Hasta</label><br>
+            <input type="text" id="to">
+        </div>
+        <button id="onRoute">Calculate</button>
+        <table>
+            <tbody>
+                <tr>
+                    <td><input type="radio" name="transport" value="CAR" checked></input></td>
+                    <td>Car</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="transport" value="WALK"></input></td>
+                    <td>Walk</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="transport" value="BIKE"></input></td>
+                    <td>Bike</td>
+
+                </tr>
+                <tr>
+                    <td> <input type="radio" name="transport" value="TRANSIT"></input></td>
+                    <td>Public</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button id="onMarkerRoute">Calculate Markers Route</button>
+    <div id="main">
+        <div id="aside">
+            <button id="onZoomIn">Zoom +</button><br>
+            <button id="onZoomOut">Zoom -</button><br>
+            <h3>Type</h3>
+            <button id="onHybrid">Hybrid</button><br>
+            <button id="onRoad">Road</button><br>
+            <button id="onSatellite">Satellite</button><br>
+            <button id="onTerrain">Terrain</button><br>
+
+            <h3>Map onClick</h3>
+            <button onclick="markerOnClick()">Add Marker</button><br>
+            <button onclick="polylineOnClick()">Add Polyline</button><br>
+            <button onclick="polygonOnClick()">Add Poligon</button><br>
+            <button onclick="geodesicOnClick()">Add Geodesic</button><br>
+
+        </div>
+        <div id="map"></div>
+    </div>
+    <ul id="indications"></ul>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&sensor=false&key=AIzaSyBSFi66OcdrugwXJZzy1J7Ghi2_1dlQNSQ"></script>
+    <script src="../package/Gmaps.debug.js"></script>
+    <script src="maps_mundo.js"></script>
+    <script>
+        // map = new Gmaps("map");
+        // a = new google.maps.LatLng(43.26, -2.95);
+        // b = new google.maps.LatLng(43.26, -1.95);
+        // c = new google.maps.LatLng(43.26, -0.95);
+        // r = new Route({}, a, b, null, function(){map.addRoute(r);});
+    </script>
+</body>
+</html>
