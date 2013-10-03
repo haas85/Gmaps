@@ -77,10 +77,7 @@ to = new google.maps.places.Autocomplete document.getElementById("to")
 onSearch = ->
   place = search.getPlace()
   return alert("Sitio no encontrado") unless place?
-  lat = place.geometry.location.nb
-  lon = place.geometry.location.ob
-  latLng = new google.maps.LatLng(lat, lon)
-  window.map.addMarker latLng, null, true
+  window.map.addMarker place.geometry.location, null, true
 
 calculateRoute = ->
   origin = from.getPlace()

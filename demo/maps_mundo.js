@@ -83,15 +83,12 @@ from = new google.maps.places.Autocomplete(document.getElementById("from"));
 to = new google.maps.places.Autocomplete(document.getElementById("to"));
 
 onSearch = function() {
-  var lat, latLng, lon, place;
+  var place;
   place = search.getPlace();
   if (place == null) {
     return alert("Sitio no encontrado");
   }
-  lat = place.geometry.location.nb;
-  lon = place.geometry.location.ob;
-  latLng = new google.maps.LatLng(lat, lon);
-  return window.map.addMarker(latLng, null, true);
+  return window.map.addMarker(place.geometry.location, null, true);
 };
 
 calculateRoute = function() {
